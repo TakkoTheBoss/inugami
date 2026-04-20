@@ -2,6 +2,7 @@
 <p align="center">
   <img src="images/inugami-mascot.png" alt="Inugami mascot" width="260">
 </p>
+
 # Inugami
 
 Inugami is an experimental web framework for Hachi focused on lightweight HTTP services, APIs, and native server-side apps.
