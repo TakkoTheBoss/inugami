@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="images/inugami-mascot.png" alt="Inugami mascot" width="260">
+  <img src="images/inugami-mascot.png" alt="Inugami mascot" width="50%">
 </p>
 
 # Inugami
