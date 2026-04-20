@@ -18,6 +18,7 @@ outerCPP: "
 static crow::SimpleApp HC_APP;
 "
 
+$export
 setLogLevel::{Int}->{Void}:(
     level: Ri
 
@@ -46,6 +47,7 @@ setLogLevel::{Int}->{Void}:(
     "
 )
 
+$export
 get::{String,String}->{Void}:(
     path: Ri.0
     body: Ri.1
@@ -72,6 +74,7 @@ get::{String,String}->{Void}:(
     "
 )
 
+$export
 html::{String,String}->{Void}:(
     path: Ri.0
     body: Ri.1
@@ -98,6 +101,7 @@ html::{String,String}->{Void}:(
     "
 )
 
+$export
 json::{String,String}->{Void}:(
     path: Ri.0
     body: Ri.1
@@ -124,6 +128,7 @@ json::{String,String}->{Void}:(
     "
 )
 
+$export
 statusText::{String,Int,String}->{Void}:(
     path: Ri.0
     status: Ri.1
@@ -151,6 +156,7 @@ statusText::{String,Int,String}->{Void}:(
     "
 )
 
+$export
 statusHtml::{String,Int,String}->{Void}:(
     path: Ri.0
     status: Ri.1
@@ -178,6 +184,7 @@ statusHtml::{String,Int,String}->{Void}:(
     "
 )
 
+$export
 statusJson::{String,Int,String}->{Void}:(
     path: Ri.0
     status: Ri.1
@@ -205,6 +212,7 @@ statusJson::{String,Int,String}->{Void}:(
     "
 )
 
+$export
 redirect::{String,String}->{Void}:(
     path: Ri.0
     target: Ri.1
@@ -230,6 +238,7 @@ redirect::{String,String}->{Void}:(
     "
 )
 
+$export
 file::{String,String}->{Void}:(
     route: Ri.0
     filePath: Ri.1
@@ -266,6 +275,7 @@ file::{String,String}->{Void}:(
     "
 )
 
+$export
 post::{String,String}->{Void}:(
     path: Ri.0
     body: Ri.1
@@ -293,6 +303,7 @@ post::{String,String}->{Void}:(
     "
 )
 
+$export
 postJson::{String,String}->{Void}:(
     path: Ri.0
     body: Ri.1
@@ -320,6 +331,7 @@ postJson::{String,String}->{Void}:(
     "
 )
 
+$export
 run::{Int}->{Void}:(
     port: Ri
 
@@ -328,6 +340,7 @@ run::{Int}->{Void}:(
     "
 )
 
+$export
 runSingle::{Int}->{Void}:(
     port: Ri
 
