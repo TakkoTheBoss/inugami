@@ -1,0 +1,9 @@
+>@"inugami"
+
+setLogLevel: 1
+
+get: "/", "Inugami is alive"
+json: "/health", "{\"ok\":true}"
+json: "/version", "{\"framework\":\"Inugami\",\"lang\":\"Hachi\"}"
+
+run: 8080

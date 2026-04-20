@@ -1,0 +1,16 @@
+>@"hMods/inugami"
+
+setLogLevel: 1
+
+get: "/", "Inugami is alive"
+json: "/health", "{\"ok\":true}"
+json: "/version", "{\"framework\":\"Inugami\",\"lang\":\"Hachi\"}"
+html: "/docs", "<h1>Inugami</h1><p>Crow-backed. Hachi-driven.</p>"
+statusText: "/teapot", 418, "I am a teapot"
+statusHtml: "/nope", 404, "<h1>404</h1><p>Nothing here.</p>"
+redirect: "/home", "/"
+file: "/landing", "pages/landing.html"
+file: "/images/inugami-mascot.png", "images/inugami-mascot.png"
+post: "/submit", "posted ok"
+
+run: 8080

@@ -1,0 +1,337 @@
+//
+############################
+# @module inugami         #
+# Crow-backed web/api     #
+############################
+\\
+
+outerCPP: "
+#ifndef ASIO_STANDALONE
+#define ASIO_STANDALONE
+#endif
+
+#include \"vendor/crow_all.h\"
+#include <string>
+#include <fstream>
+#include <iterator>
+
+static crow::SimpleApp HC_APP;
+"
+
+setLogLevel::{Int}->{Void}:(
+    level: Ri
+
+    innerCPP: "
+        switch (level)
+        {
+            case 0:
+                HC_APP.loglevel(crow::LogLevel::Debug);
+                break;
+            case 1:
+                HC_APP.loglevel(crow::LogLevel::Info);
+                break;
+            case 2:
+                HC_APP.loglevel(crow::LogLevel::Warning);
+                break;
+            case 3:
+                HC_APP.loglevel(crow::LogLevel::Error);
+                break;
+            case 4:
+                HC_APP.loglevel(crow::LogLevel::Critical);
+                break;
+            default:
+                HC_APP.loglevel(crow::LogLevel::Warning);
+                break;
+        }
+    "
+)
+
+get::{String,String}->{Void}:(
+    path: Ri.0
+    body: Ri.1
+
+    innerCPP: "
+        std::string p(
+            reinterpret_cast<char const*>(path._data),
+            path._size
+        );
+
+        std::string b(
+            reinterpret_cast<char const*>(body._data),
+            body._size
+        );
+
+        HC_APP.route_dynamic(p)
+        ([b](const crow::request&)
+        {
+            crow::response r(200);
+            r.set_header(\"Content-Type\", \"text/plain; charset=utf-8\");
+            r.write(b);
+            return r;
+        });
+    "
+)
+
+html::{String,String}->{Void}:(
+    path: Ri.0
+    body: Ri.1
+
+    innerCPP: "
+        std::string p(
+            reinterpret_cast<char const*>(path._data),
+            path._size
+        );
+
+        std::string b(
+            reinterpret_cast<char const*>(body._data),
+            body._size
+        );
+
+        HC_APP.route_dynamic(p)
+        ([b](const crow::request&)
+        {
+            crow::response r(200);
+            r.set_header(\"Content-Type\", \"text/html; charset=utf-8\");
+            r.write(b);
+            return r;
+        });
+    "
+)
+
+json::{String,String}->{Void}:(
+    path: Ri.0
+    body: Ri.1
+
+    innerCPP: "
+        std::string p(
+            reinterpret_cast<char const*>(path._data),
+            path._size
+        );
+
+        std::string b(
+            reinterpret_cast<char const*>(body._data),
+            body._size
+        );
+
+        HC_APP.route_dynamic(p)
+        ([b](const crow::request&)
+        {
+            crow::response r(200);
+            r.set_header(\"Content-Type\", \"application/json\");
+            r.write(b);
+            return r;
+        });
+    "
+)
+
+statusText::{String,Int,String}->{Void}:(
+    path: Ri.0
+    status: Ri.1
+    body: Ri.2
+
+    innerCPP: "
+        std::string p(
+            reinterpret_cast<char const*>(path._data),
+            path._size
+        );
+
+        std::string b(
+            reinterpret_cast<char const*>(body._data),
+            body._size
+        );
+
+        HC_APP.route_dynamic(p)
+        ([status, b](const crow::request&)
+        {
+            crow::response r(status);
+            r.set_header(\"Content-Type\", \"text/plain; charset=utf-8\");
+            r.write(b);
+            return r;
+        });
+    "
+)
+
+statusHtml::{String,Int,String}->{Void}:(
+    path: Ri.0
+    status: Ri.1
+    body: Ri.2
+
+    innerCPP: "
+        std::string p(
+            reinterpret_cast<char const*>(path._data),
+            path._size
+        );
+
+        std::string b(
+            reinterpret_cast<char const*>(body._data),
+            body._size
+        );
+
+        HC_APP.route_dynamic(p)
+        ([status, b](const crow::request&)
+        {
+            crow::response r(status);
+            r.set_header(\"Content-Type\", \"text/html; charset=utf-8\");
+            r.write(b);
+            return r;
+        });
+    "
+)
+
+statusJson::{String,Int,String}->{Void}:(
+    path: Ri.0
+    status: Ri.1
+    body: Ri.2
+
+    innerCPP: "
+        std::string p(
+            reinterpret_cast<char const*>(path._data),
+            path._size
+        );
+
+        std::string b(
+            reinterpret_cast<char const*>(body._data),
+            body._size
+        );
+
+        HC_APP.route_dynamic(p)
+        ([status, b](const crow::request&)
+        {
+            crow::response r(status);
+            r.set_header(\"Content-Type\", \"application/json\");
+            r.write(b);
+            return r;
+        });
+    "
+)
+
+redirect::{String,String}->{Void}:(
+    path: Ri.0
+    target: Ri.1
+
+    innerCPP: "
+        std::string p(
+            reinterpret_cast<char const*>(path._data),
+            path._size
+        );
+
+        std::string t(
+            reinterpret_cast<char const*>(target._data),
+            target._size
+        );
+
+        HC_APP.route_dynamic(p)
+        ([t](const crow::request&)
+        {
+            crow::response r(302);
+            r.set_header(\"Location\", t);
+            return r;
+        });
+    "
+)
+
+file::{String,String}->{Void}:(
+    route: Ri.0
+    filePath: Ri.1
+
+    innerCPP: "
+        std::string p(
+            reinterpret_cast<char const*>(route._data),
+            route._size
+        );
+
+        std::string fp(
+            reinterpret_cast<char const*>(filePath._data),
+            filePath._size
+        );
+
+        HC_APP.route_dynamic(p)
+        ([fp](const crow::request&)
+        {
+            std::ifstream file(fp, std::ios::binary);
+            if (!file.is_open())
+            {
+                return crow::response(404, \"file not found\");
+            }
+
+            std::string content(
+                (std::istreambuf_iterator<char>(file)),
+                std::istreambuf_iterator<char>()
+            );
+
+            crow::response r(200);
+            r.write(content);
+            return r;
+        });
+    "
+)
+
+post::{String,String}->{Void}:(
+    path: Ri.0
+    body: Ri.1
+
+    innerCPP: "
+        std::string p(
+            reinterpret_cast<char const*>(path._data),
+            path._size
+        );
+
+        std::string b(
+            reinterpret_cast<char const*>(body._data),
+            body._size
+        );
+
+        HC_APP.route_dynamic(p)
+        .methods(crow::HTTPMethod::POST)
+        ([b](const crow::request&)
+        {
+            crow::response r(200);
+            r.set_header(\"Content-Type\", \"text/plain; charset=utf-8\");
+            r.write(b);
+            return r;
+        });
+    "
+)
+
+postJson::{String,String}->{Void}:(
+    path: Ri.0
+    body: Ri.1
+
+    innerCPP: "
+        std::string p(
+            reinterpret_cast<char const*>(path._data),
+            path._size
+        );
+
+        std::string b(
+            reinterpret_cast<char const*>(body._data),
+            body._size
+        );
+
+        HC_APP.route_dynamic(p)
+        .methods(crow::HTTPMethod::POST)
+        ([b](const crow::request&)
+        {
+            crow::response r(200);
+            r.set_header(\"Content-Type\", \"application/json\");
+            r.write(b);
+            return r;
+        });
+    "
+)
+
+run::{Int}->{Void}:(
+    port: Ri
+
+    innerCPP: "
+        HC_APP.port(port).multithreaded().run();
+    "
+)
+
+runSingle::{Int}->{Void}:(
+    port: Ri
+
+    innerCPP: "
+        HC_APP.port(port).run();
+    "
+)

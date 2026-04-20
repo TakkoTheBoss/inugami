@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inugami Showcase</title>
+  <meta name="description" content="A flashy showcase page for Inugami, the experimental web framework for Hachi.">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #070b14;
+      --bg2: #0f1728;
+      --card: rgba(17, 24, 39, 0.72);
+      --line: rgba(120, 160, 255, 0.24);
+      --text: #eef3ff;
+      --muted: #b4c0dc;
+      --cyan: #52e3ff;
+      --blue: #6ea8ff;
+      --violet: #aa7dff;
+      --pink: #ff68c8;
+      --green: #61f3b4;
+      --shadow: 0 20px 80px rgba(0, 0, 0, 0.45);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(82, 227, 255, 0.16), transparent 30%),
+        radial-gradient(circle at 90% 15%, rgba(170, 125, 255, 0.18), transparent 28%),
+        radial-gradient(circle at 50% 70%, rgba(255, 104, 200, 0.14), transparent 30%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 20px 80px;
+      position: relative;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 28px;
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(9, 13, 24, 0.55);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text);
+    }
+
+    .brand-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--cyan), var(--violet), var(--pink));
+      color: #09111f;
+      font-size: 1.1rem;
+      font-weight: 900;
+      box-shadow: 0 10px 28px rgba(110, 168, 255, 0.35);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav-links a,
+    .btn {
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      padding: 10px 14px;
+      border-radius: 999px;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+    }
+
+    .nav-links a:hover,
+    .btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.14);
+    }
+
+    .hero {
+      position: relative;
+      padding: 56px 32px 36px;
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 8px);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)),
+        rgba(11, 16, 28, 0.72);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      isolation: isolate;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(30px);
+      z-index: -1;
+      opacity: 0.85;
+    }
+
+    .hero::before {
+      width: 340px;
+      height: 340px;
+      right: -80px;
+      top: -60px;
+      background: radial-gradient(circle, rgba(82, 227, 255, 0.36), transparent 65%);
+    }
+
+    .hero::after {
+      width: 320px;
+      height: 320px;
+      left: -90px;
+      bottom: -80px;
+      background: radial-gradient(circle, rgba(255, 104, 200, 0.28), transparent 65%);
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding: 10px 14px;
+      border: 1px solid rgba(97, 243, 180, 0.25);
+      border-radius: 999px;
+      background: rgba(97, 243, 180, 0.08);
+      color: #bdfade;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.6rem, 7vw, 5.7rem);
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+      max-width: 9.5ch;
+      text-wrap: balance;
+    }
+
+    .gradient {
+      background: linear-gradient(90deg, var(--cyan), var(--blue), var(--violet), var(--pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      margin-top: 18px;
+      max-width: 720px;
+      font-size: clamp(1.02rem, 2vw, 1.22rem);
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      border-color: transparent;
+      box-shadow: 0 12px 28px rgba(110, 168, 255, 0.32);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #86b7ff, #bc95ff);
+    }
+
+    .hero-art {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-art img {
+      width: min(100%, 420px);
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 18px 38px rgba(0, 0, 0, 0.45));
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.035);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .stat .value {
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .stat .label {
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .section {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 22px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .mini {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .mini strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .code {
+      margin-top: 16px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #0a0f18;
+    }
+
+    .code-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: #d5def4;
+      font-size: 0.94rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .red { background: #ff5f57; }
+    .yellow { background: #ffbd2e; }
+    .green { background: #28c840; }
+
+    pre {
+      margin: 0;
+      padding: 18px;
+      overflow-x: auto;
+      color: #d6e4ff;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    code { font-family: "Courier New", Courier, monospace; }
+
+    .endpoints {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .endpoint {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .method {
+      display: inline-block;
+      min-width: 56px;
+      text-align: center;
+      border-radius: 999px;
+      padding: 6px 10px;
+      margin-right: 10px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #07111d;
+      background: linear-gradient(135deg, var(--green), var(--cyan));
+    }
+
+    .path {
+      font-family: "Courier New", Courier, monospace;
+      color: #cfe1ff;
+      word-break: break-all;
+    }
+
+    .endpoint p {
+      margin: 10px 0 0;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 26px;
+      padding: 18px 8px 0;
+      text-align: center;
+      color: #97a8c9;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 950px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .section {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        border-radius: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="nav">
+      <div class="brand">
+        <div class="brand-badge">犬</div>
+        <div>INUGAMI</div>
+      </div>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/health">Health</a>
+        <a href="/version">Version</a>
+        <a href="/teapot">Teapot</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div>
+        <div class="kicker">Experimental • Hachi-native • API-first</div>
+        <h1><span class="gradient">Inugami</span> is alive.</h1>
+        <p class="hero-sub">
+          Inugami is an experimental web framework for Hachi focused on lightweight HTTP services,
+          APIs, and native server-side applications with a clean, approachable developer feel.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/health">Check health</a>
+          <a class="btn" href="/version">View version</a>
+          <a class="btn" href="/docs">Open docs endpoint</a>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="value">Hachi</div>
+            <div class="label">Simple route definitions, practical native execution, and room to grow.</div>
+          </div>
+          <div class="stat">
+            <div class="value">Inugami</div>
+            <div class="label">A loyal framework spirit for APIs, demos, and future server-side apps.</div>
+          </div>
+          <div class="stat">
+            <div class="value">1 file</div>
+            <div class="label">This landing page is self-contained and perfect for route-based showcasing.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <img src="images/inugami-mascot.png" alt="Inugami mascot">
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <h2>What this is showing off</h2>
+        <p>
+          This page is meant to feel like a real framework landing page while still being easy to serve
+          through a simple file route. It keeps the wow factor high without needing extra assets or a
+          complex frontend build.
+        </p>
+
+        <div class="grid">
+          <div class="mini">
+            <strong>Framework direction</strong>
+            Inugami is shaping into a clean, friendly web layer for Hachi with a strong identity.
+          </div>
+          <div class="mini">
+            <strong>Developer experience</strong>
+            Short route declarations and direct app behavior make it feel light and expressive.
+          </div>
+          <div class="mini">
+            <strong>Showcase ready</strong>
+            Great for demos, docs, starter repos, and proving that Hachi can build real services.
+          </div>
+        </div>
+
+        <div class="code">
+          <div class="code-head">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span>main.hachi</span>
+          </div>
+          <pre><code>>@"inugami"
+
+setLogLevel: 1
+
+get: "/", "Inugami is alive"
+json: "/health", "{\"ok\":true}"
+json: "/version", "{\"framework\":\"Inugami\",\"lang\":\"Hachi\"}"
+file: "/landing", "pages/flashy_inugami_page.html"
+
+run: 8080</code></pre>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Live endpoint ideas</h2>
+        <div class="endpoints">
+          <div class="endpoint">
+            <span class="method">GET</span><span class="path">/</span>
+            <p>Plain-text heartbeat for the framework.</p>
+          </div>
+          <div class="endpoint">
+            <span class="method">GET</span><span class="path">/health</span>
+            <p>JSON health check response for operational sanity.</p>
+          </div>
+          <div class="endpoint">
+            <span class="method">GET</span><span class="path">/version</span>
+            <p>Framework and language version metadata.</p>
+          </div>
+          <div class="endpoint">
+            <span class="method">GET</span><span class="path">/landing</span>
+            <p>This flashy static page served through a file route.</p>
+          </div>
+          <div class="endpoint">
+            <span class="method">GET</span><span class="path">/teapot</span>
+            <p>Because any respectable demo deserves a dramatic HTTP 418.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Inugami • experimental Hachi web framework • built for demos, APIs, and future trouble
+    </footer>
+  </div>
+</body>
+</html>

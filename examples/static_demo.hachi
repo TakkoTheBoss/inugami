@@ -1,0 +1,10 @@
+>@"inugami"
+
+setLogLevel: 1
+
+html: "/docs", "<h1>Inugami</h1><p>Served from Hachi.</p>"
+file: "/landing", "pages/sample_api_page.html"
+redirect: "/home", "/landing"
+statusHtml: "/missing", 404, "<h1>404</h1><p>Nothing here.</p>"
+
+run: 8080
