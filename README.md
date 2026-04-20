@@ -13,11 +13,6 @@ Inugami is an experimental web framework for Hachi focused on lightweight HTTP s
 - `main.hachi` - ready-to-run demo app
 - `examples/` - a few smaller examples
 - `pages/sample_api_page.html` - sample static page for `file:` routes
-- `images/inugami-icon.png` - simple icon/logo
-- `images/inugami-mascot.png` - main mascot art
-- `images/inugami-mascot-round.png` - round mascot variant
-- `vendor/Crow-master/include/` - vendored Crow headers
-- `vendor/Crow-master/LICENSE` - upstream Crow license
 
 ## Prerequisite
 
