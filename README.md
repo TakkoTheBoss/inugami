@@ -37,8 +37,8 @@ curl localhost:8080
 curl localhost:8080/health
 curl localhost:8080/version
 curl localhost:8080/home -i
-curl -X POST localhost:8080/submit
-curl -X POST localhost:8080/save
+curl -X POST localhost:8080/submit # Example
+curl -X POST localhost:8080/save # Example
 ```
 
 ## Quick start
