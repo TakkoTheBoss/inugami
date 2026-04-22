@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="images/inugami-mascot.png" alt="Inugami mascot" width="50%">
+  <img src="images/inugami-mascot.png" alt="Inugami mascot" width="75%">
 </p>
 
 # Inugami
@@ -16,6 +16,12 @@ Inugami is an experimental web framework for Hachi focused on lightweight HTTP s
 
 ## Prerequisite
 
+[Hachi](https://hdev.run) version 0.5 or later.
+
+```bash
+curl -fsSL https://hdev.run/install | bash
+```
+
 Install standalone Asio headers on your system.
 
 On Debian/Ubuntu-like systems:
@@ -28,6 +34,12 @@ sudo apt install libasio-dev
 
 ```bash
 hachi main.hachi -go
+```
+
+Or build it via:
+
+```bash
+hachi main.hachi -build inu # or whatever name you prefer
 ```
 
 Then test:
@@ -346,3 +358,4 @@ run: 8080
 - `runSingle:` is included for simpler debugging.
 - `json:` and `postJson:` expect valid JSON as a string literal.
 - To reference images from HTML pages served by Inugami, expose them with a matching `file:` route.
+
