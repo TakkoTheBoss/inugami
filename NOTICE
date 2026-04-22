@@ -1,6 +1,6 @@
-This starter kit vendors Crow headers under `vendor/Crow-master/`.
+This starter kit vendors Crow headers under `vendor/crow_all.h".
 
 Crow is distributed under the BSD 3-Clause License. See:
-- `vendor/Crow-master/LICENSE`
+- `vendor/crow_LICENSE`
 
-You are also responsible for satisfying any separate requirements of system-level dependencies such as standalone Asio.
+Crow is a fantastic backend to this project, however it is the long-term (tentative) goal to replace crow.
